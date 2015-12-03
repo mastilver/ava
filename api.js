@@ -31,6 +31,11 @@ function Api(files, options) {
 	this.tests = [];
 	this.files = files || [];
 
+	if (this.require && !Array.isArray(this.require)) {
+		// normalise single `--require moduleId` usage
+		this.require = [this.require];
+	}
+
 	Object.keys(Api.prototype).forEach(function (key) {
 		this[key] = this[key].bind(this);
 	}, this);
@@ -56,7 +61,17 @@ Api.prototype._runFile = function (file) {
 		args.push('--sorted');
 	}
 
-	return fork(args)
+	var options = {
+		execArgv: []
+	};
+
+	if (this.require) {
+		this.require.forEach(function (moduleId) {
+			options.execArgv.push('--require', moduleId);
+		});
+	}
+
+	return fork(args, options)
 		.on('stats', this._handleStats)
 		.on('test', this._handleTest)
 		.on('unhandledRejections', this._handleRejections)

@@ -35,6 +35,7 @@ var cli = meow([
 	'  --init       Add AVA to your project',
 	'  --fail-fast  Stop after first test failure',
 	'  --serial     Run tests serially',
+	'  --require    module to preload (option can be repeated)',
 	'',
 	'Examples',
 	'  ava',
@@ -46,7 +47,10 @@ var cli = meow([
 	'Default patterns when no arguments:',
 	'test.js test-*.js test/*.js'
 ], {
-	string: ['_'],
+	string: [
+		'_',
+		'require'
+	],
 	boolean: [
 		'fail-fast',
 		'serial'
@@ -64,7 +68,8 @@ log.write();
 
 var api = new Api(cli.input, {
 	failFast: cli.flags.failFast,
-	serial: cli.flags.serial
+	serial: cli.flags.serial,
+	require: cli.flags.require
 });
 
 api.on('test', function (test) {
