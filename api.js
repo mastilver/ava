@@ -67,7 +67,7 @@ Api.prototype._runFile = function (file) {
 
 	if (this.require) {
 		this.require.forEach(function (moduleId) {
-			options.execArgv.push('--require', moduleId);
+			options.execArgv.push('-r', moduleId);
 		});
 	}
 
