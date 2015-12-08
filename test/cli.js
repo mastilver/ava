@@ -15,12 +15,14 @@ function execCli(args, cb) {
 		env.AVA_APPVEYOR = 1;
 	}
 
+	console.error(['../cli.js'].concat(args))
+
 	childProcess.execFile(process.execPath, ['../cli.js'].concat(args), {
 		cwd: __dirname,
 		env: env
 	}, cb);
 }
-
+         /*
 test('ES2015 support', function (t) {
 	t.plan(1);
 
@@ -299,54 +301,13 @@ test('test file in node_modules is ignored', function (t) {
 		t.true(/Couldn't find any files to test/.test(stderr));
 		t.end();
 	});
-});
+});              */
 
 test('pass --require through to Node.js exec #1', function (t) {
 	t.plan(2);
 
 	execCli([
 		'--require=' + path.join(__dirname, 'fixture', 'install-global.js'),
-		'fixture/validate-installed-global.js'
-	], function (err, stdout, stderr) {
-		t.ifError(err);
-		t.is(stderr.trim(), '1 test passed');
-		t.end();
-	});
-});
-
-test('pass --require through to Node.js exec #2', function (t) {
-	t.plan(2);
-
-	execCli([
-		'fixture/validate-installed-global.js',
-		'--require=' + path.join(__dirname, 'fixture', 'install-global.js')
-	], function (err, stdout, stderr) {
-		t.ifError(err);
-		t.is(stderr.trim(), '1 test passed');
-		t.end();
-	});
-});
-
-test('pass --require through to Node.js exec #3', function (t) {
-	t.plan(2);
-
-	execCli([
-		'fixture/validate-installed-global.js',
-		'--require',
-		path.join(__dirname, 'fixture', 'install-global.js')
-	], function (err, stdout, stderr) {
-		t.ifError(err);
-		t.is(stderr.trim(), '1 test passed');
-		t.end();
-	});
-});
-
-test('pass --require through to Node.js exec #4', function (t) {
-	t.plan(2);
-
-	execCli([
-		'--require',
-		path.join(__dirname, 'fixture', 'install-global.js'),
 		'fixture/validate-installed-global.js'
 	], function (err, stdout, stderr) {
 		t.ifError(err);
