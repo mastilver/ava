@@ -305,7 +305,7 @@ test('pass --require through to Node.js exec #1', function (t) {
 	t.plan(2);
 
 	execCli([
-		'--require ' + path.join(__dirname, 'fixture', 'install-global.js'),
+		'--require=' + path.join(__dirname, 'fixture', 'install-global.js'),
 		'fixture/validate-installed-global.js'
 	], function (err, stdout, stderr) {
 		t.ifError(err);
@@ -319,7 +319,7 @@ test('pass --require through to Node.js exec #2', function (t) {
 
 	execCli([
 		'fixture/validate-installed-global.js',
-		'--require ' + path.join(__dirname, 'fixture', 'install-global.js')
+		'--require=' + path.join(__dirname, 'fixture', 'install-global.js')
 	], function (err, stdout, stderr) {
 		t.ifError(err);
 		t.is(stderr.trim(), '1 test passed');
