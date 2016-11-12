@@ -380,6 +380,10 @@ test('.throws()', function (t) {
 		assert.throws(function () {
 			throw new Error('foo');
 		});
+
+		assert.throws(function () {
+			return Promise.reject(new Error('foo'));
+		});
 	});
 
 	t.end();
